@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VoxelCraft - Play Minecraft in Browser</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>VoxelCraft</h1>
+  <p>Play a Minecraft-style world right in your browser!</p>
+  <div id="gameContainer"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <script src="https://unpkg.com/voxel-engine@latest/build/voxel-engine.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
+const game = voxelEngine({
+  generate: function(x, y, z) {
+    if (y === 0) return 1;
+    if (y < 0) return 2;
+    return 0;
+  },
+  materials: ['grass', 'dirt', 'stone'],
+  texturePath: 'https://voxeljs.com/images/textures/',
+  worldOrigin: [0, 0, 0],
+  chunkDistance: 2,
+  controls: { discreteFire: true }
+});
+
+document.getElementById('gameContainer').appendChild(game.view);
+
+game.requestPointerLock();
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  text-align: center;
+  background-color: #202020;
+  color: #fff;
+}
+
+h1 {
+  margin-top: 20px;
+  color: #00ffcc;
+}
+
+#gameContainer canvas {
+  display: block;
+  margin: 20px auto;
+  border-radius: 10px;
+  box-shadow: 0 0 15px #00ffcc;
+}
